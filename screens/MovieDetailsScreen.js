@@ -5,9 +5,10 @@ import {createBottomTabNavigator, createStackNavigator} from 'react-navigation'
 
 export default class MovieDetailsScreen extends React.Component {
   render() {
+    const movie = this.props.navigation.getParam('movie')
     return (
       <View style={styles.container}>
-        <Text>This is a movie details screen</Text>
+        <Text>This is a movie called {movie.Title}</Text>
       </View>
     );
   }
