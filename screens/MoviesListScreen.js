@@ -31,7 +31,7 @@ export default class MoviesListScreen extends React.Component {
   state = {
     movies: [],
     page: 0,
-    searchValue: "harry",
+    searchValue: "",
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -70,7 +70,6 @@ export default class MoviesListScreen extends React.Component {
         onSubmitEditing: this.newSearch,
       },
     });
-    this.fetchNextMoviesPageAsync()
   }
 
   Movie = ({ item }) => {

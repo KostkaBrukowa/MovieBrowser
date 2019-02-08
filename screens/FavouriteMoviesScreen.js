@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, FlatList } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { MovieListItem } from "./../components/MovieListItem";
 
@@ -10,47 +10,46 @@ export const FavouritesBarIcon = ({ focused, tintColor }) => {
 
 export default class FavouriteMoviesScreen extends React.Component {
   state = {
-    movies: null
+    movies: null,
   };
 
   goToMoviesDetail = imdbID => {
-    this.props.navigation.push('MovieDetails', {
-      movie: this.state.movies.find(movie => movie.imdbID == imdbID)
-    })
+    this.props.navigation.push("MovieDetails", {
+      movie: this.state.movies.find(movie => movie.imdbID == imdbID),
+    });
+  };
+
+  getFavouriteMovies = async () => {
+    const { favourites } = this.props.screenProps;
+    const movies = [...favourites.toList()];
+    this.setState({ movies });
+  };
+
+  componentDidMount() {
+    this.getFavouriteMovies();
+    console.log(this.state.movies);
   }
 
-  fetchFavouriteMoviesAsync = async () => {
-    const {favourites} = this.props.screenProps
-    // const movies =     
-  }
-
-  componentDidMount(){
-    this.fetchFavouriteMoviesAsync()
-  }
-
-  componentDidUpdate() {
-    console.log('updated')
-    // this.setState({
-    //   movies: this.statemovies.filter(movie =>
-    //     this.props.favourites.includes(movie.imdbID)
-    //   )
-    // });
+  componentDidUpdate(prevProps) {
+    const { favourites } = this.props.screenProps;
+    if (prevProps.screenProps.favourites !== favourites)
+      this.getFavouriteMovies();
   }
 
   render() {
-    if (this.state.movies === null || 1)//!!!!!
-      return (
-        <View style={styles.container}>
-          <Text>This is a favourite movies screen</Text>
-        </View>
-      );
+    if (this.state.movies === null) return <View />;
 
-
-    <ScrollView style={{flex:1}}>
-      {this.state.movies.map(movie => (
-        <MovieListItem {...movie} isInFavourites />
-      ))}
-    </ScrollView>;
+    // const moviesList = this.state.movies.map(movie => (
+    //   <MovieListItem {...movie} />
+    // ));
+    return (
+      <FlatList
+        style={{ flex: 1 }}
+        data={this.state.movies}
+        renderItem={({ item }) => <MovieListItem {...item} isInFavourites={true} />}
+        keyExtractor={movie => movie.imdbID}
+      />
+    );
   }
 }
 
@@ -59,6 +58,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center"
-  }
+    justifyContent: "center",
+  },
 });
