@@ -6,7 +6,7 @@ import {
   View,
   Button,
   TouchableHighlight,
-  TextInput
+  TextInput,
 } from "react-native";
 import { MovieDetailsScreen } from "./MovieDetailsScreen";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -21,34 +21,30 @@ export const MoviesBarIcon = ({ focused, tintColor }) => {
 
 export default class MoviesListScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
-    const searchValue = navigation.getParam("searchValue")
-    const onChangeText = navigation.getParam("onChangeText")
+    const searchButtonProps = navigation.getParam("searchButtonProps");
     return {
       headerTitle: "Movies",
-      headerRight: (
-        <SearchButton  value={searchValue} onChangeText={onChangeText}/>
-      )
+      headerRight: <SearchButton {...searchButtonProps} />,
     };
   };
 
   state = {
     movies: [],
     page: 0,
-    searchValue: ""
+    searchValue: "harry",
   };
 
   componentDidUpdate(prevProps, prevState) {
     const { favourites } = this.props.screenProps;
-
     if (prevProps.screenProps.favourites !== favourites) {
       const updatedMovies = this.state.movies.map(movie =>
-        movie.isInFavourites !== favourites.includes(movie.imdbID)
+        movie.isInFavourites !== favourites.has(movie.imdbID)
           ? { ...movie, isInFavourites: !movie.isInFavourites }
           : movie
       );
 
       this.setState({
-        movies: updatedMovies
+        movies: updatedMovies,
       });
     }
 
@@ -56,11 +52,25 @@ export default class MoviesListScreen extends React.Component {
       this.props.navigation.setParams({ searchValue: this.state.searchValue });
     }
   }
-  
+
+  onChangeSearchText = searchValue => {
+    this.setState({ searchValue });
+  };
+
+  newSearch = () => {
+    if(this.state.searchValue)
+      this.setState({ movies: [], page: 0 }, this.fetchNextMoviesPageAsync);
+  };
 
   componentDidMount() {
-    this.props.navigation.setParams({searchValue:this.state.searchValue, onChangeText:this.onChangeSearchText})
-    // this.fetchNextMoviesPageAsync();
+    this.props.navigation.setParams({
+      searchButtonProps: {
+        searchValue: this.state.searchValue,
+        onChangeText: this.onChangeSearchText,
+        onSubmitEditing: this.newSearch,
+      },
+    });
+    this.fetchNextMoviesPageAsync()
   }
 
   Movie = ({ item }) => {
@@ -68,24 +78,26 @@ export default class MoviesListScreen extends React.Component {
   };
 
   goToMoviesDetail = imdbID => {
-    console.log(imdbID);
     this.props.navigation.push("MovieDetails", {
-      movie: this.state.movies.find(movie => movie.imdbID == imdbID)
+      movie: this.state.movies.find(movie => movie.imdbID == imdbID),
     });
   };
 
   fetchNextMoviesPageAsync = async () => {
-    const newPage = await fetchMoviesSearchAsync("harry", this.state.page + 1);
+    const newPage = await fetchMoviesSearchAsync(
+      this.state.searchValue,
+      this.state.page + 1
+    );
     const newPageWithFavourites = newPage.map(movie => ({
       ...movie,
-      isInFavourites: this.props.screenProps.favourites.includes(movie.imdbID),
+      isInFavourites: this.props.screenProps.favourites.has(movie.imdbID),
       onFavouriteAdd: this.props.screenProps.onFavouriteAdd,
-      onMoviePress: this.goToMoviesDetail
+      onMoviePress: this.goToMoviesDetail,
     }));
 
     this.setState(prevState => ({
       movies: prevState.movies.concat(newPageWithFavourites),
-      page: prevState.page + 1
+      page: prevState.page + 1,
     }));
   };
 
@@ -107,6 +119,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center"
-  }
+    justifyContent: "center",
+  },
 });

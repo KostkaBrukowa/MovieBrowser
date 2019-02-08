@@ -64,7 +64,7 @@ export default class App extends React.Component {
   // }
   addNewFavourite = movie => {
     this.setState(prevState => ({
-      favourites: this.state.favourites.includes(movie.imdbID)
+      favourites: this.state.favourites.has(movie.imdbID)
         ? prevState.favourites.remove(movie.imdbID)
         : prevState.favourites.set(movie.imdbID, movie),
     }));

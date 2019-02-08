@@ -13,51 +13,46 @@ const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 
 export class SearchButton extends React.Component {
   state = {
-    animatedValue: new Animated.Value(0),
-  }
+    animatedValue: new Animated.Value(0)
+  };
 
-  showTextInput = ()=>{
-    Animated.timing(                  
-      this.state.animatedValue,             
-      {
-        toValue: 1,                   
-        duration: 500,
-      }
-    ).start(); 
-  }
+  showTextInput = () => {
+    Animated.timing(this.state.animatedValue, {
+      toValue: 1,
+      duration: 500
+    }).start();
+  };
 
-  hideTextInput = ()=>{
-    Animated.timing(                  
-      this.state.animatedValue,             
-      {
-        toValue: 0,                   
-        duration: 500,
-      }
-    ).start(); 
-  }
+  hideTextInput = () => {
+    if (this.props.value === "")
+      Animated.timing(this.state.animatedValue, {
+        toValue: 0,
+        duration: 500
+      }).start();
+  };
 
-  componentDidMount(){
+  componentDidMount() {
     // this.showTextInput()
   }
 
   toSearchInputWidth = () => {
     return this.state.animatedValue.interpolate({
-      inputRange:[0,1],
-      outputRange:[100, 220]
-    })
-  }
+      inputRange: [0, 1],
+      outputRange: [80, 220]
+    });
+  };
 
   render() {
     return (
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
+      <View style={{ flexDirection: "row", alignItems: "center" , marginRight:10}}>
         <AnimatedTextInput
-          style={[styles.searchContainer, {width: this.toSearchInputWidth()}]}
+          style={[styles.searchContainer, { width: this.toSearchInputWidth() }]}
           placeholder="Search"
-          value={this.props.searchValue}
           onFocus={this.showTextInput}
           onBlur={this.hideTextInput}
+          {...this.props}
         />
-        <TouchableOpacity onPress={() => console.log("search")}>
+        <TouchableOpacity onPress={this.props.onSubmitEditing}>
           <Icon name="md-search" size={25} />
         </TouchableOpacity>
       </View>
@@ -71,6 +66,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     height: 35,
     paddingRight: 20,
-    textAlign:'right'
+    marginRight:10,
+    textAlign: "right"
   }
 });

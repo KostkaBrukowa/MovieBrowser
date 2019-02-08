@@ -10,6 +10,8 @@ import {
   TextInput,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import {FavouritesStar} from './../components/FavouritesStar'
+
 
 const imageScale = 0.25;
 const imageHeight = 455 * imageScale;
@@ -24,27 +26,19 @@ export class MovieListItem extends React.Component {
     const {
       Title,Year,Poster,isInFavourites,onFavouriteAdd,imdbID,onMoviePress,
     } = this.props;
-    // console.log(this.props.id)
     return (
       <TouchableOpacity onPress={() => onMoviePress(imdbID)}>
         <View style={styles.movieContainer}>
-          <View style={{ flex: 2 }}>
+          <View style={{ flex: 1 }}>
             <Image style={styles.image} source={{ uri: Poster }} />
           </View>
           <View style={styles.infoContainer}>
             <Text style={styles.text}>{Title}</Text>
             <Text style={styles.text}>Year: {Year}</Text>
           </View>
-          <View style={{ flex: 4 }}>
-            <Text>Rating: 0.0/10</Text>
-          </View>
           <TouchableWithoutFeedback onPress={() => onFavouriteAdd(this.props)}>
             <View style={{ flex: 1, paddingRight: 0 }}>
-              {isInFavourites ? (
-                <Icon name={"md-star"} size={30} color="gold" />
-              ) : (
-                <Icon name={"md-star"} size={30} />
-              )}
+              <FavouritesStar isGold={isInFavourites} size={30} />
             </View>
           </TouchableWithoutFeedback>
         </View>
