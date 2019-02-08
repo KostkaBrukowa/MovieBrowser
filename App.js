@@ -14,7 +14,7 @@ import FavouriteMoviesScreen, {
   FavouritesBarTitle,
   FavouritesBarIcon,
 } from "./screens/FavouriteMoviesScreen";
-import { Set } from "immutable";
+import { Map } from "immutable";
 
 const MoviesNavigator = createStackNavigator(
   {
@@ -53,7 +53,7 @@ const AppContainer = createAppContainer(AppNavigator);
 
 export default class App extends React.Component {
   state = {
-    favourites: new Set(),
+    favourites: new Map(),
   };
 
   // componentDidMount(){
@@ -62,11 +62,11 @@ export default class App extends React.Component {
   // componentDidUpdate() {
   //   console.log(this.state.favourites);
   // }
-  addNewFavourite = imdbID => {
+  addNewFavourite = movie => {
     this.setState(prevState => ({
-      favourites: this.state.favourites.includes(imdbID)
-        ? prevState.favourites.remove(imdbID)
-        : prevState.favourites.add(imdbID),
+      favourites: this.state.favourites.includes(movie.imdbID)
+        ? prevState.favourites.remove(movie.imdbID)
+        : prevState.favourites.set(movie.imdbID, movie),
     }));
   };
 

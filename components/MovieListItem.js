@@ -22,7 +22,7 @@ export class MovieListItem extends React.Component {
 
   render() {
     const {
-      Title,Year,Poster,isInFavourites,onAddToFavourites,imdbID,onMoviePress,
+      Title,Year,Poster,isInFavourites,onFavouriteAdd,imdbID,onMoviePress,
     } = this.props;
     // console.log(this.props.id)
     return (
@@ -38,7 +38,7 @@ export class MovieListItem extends React.Component {
           <View style={{ flex: 4 }}>
             <Text>Rating: 0.0/10</Text>
           </View>
-          <TouchableWithoutFeedback onPress={() => onAddToFavourites(imdbID)}>
+          <TouchableWithoutFeedback onPress={() => onFavouriteAdd(this.props)}>
             <View style={{ flex: 1, paddingRight: 0 }}>
               {isInFavourites ? (
                 <Icon name={"md-star"} size={30} color="gold" />

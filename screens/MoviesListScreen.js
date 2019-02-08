@@ -6,7 +6,7 @@ import {
   View,
   Button,
   TouchableHighlight,
-  TextInput,
+  TextInput
 } from "react-native";
 import { MovieDetailsScreen } from "./MovieDetailsScreen";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -20,17 +20,24 @@ export const MoviesBarIcon = ({ focused, tintColor }) => {
 };
 
 export default class MoviesListScreen extends React.Component {
-  static navigationOptions = {
-    headerTitle: "Movies",
-    headerRight: <SearchButton />,
+  static navigationOptions = ({ navigation }) => {
+    const searchValue = navigation.getParam("searchValue")
+    const onChangeText = navigation.getParam("onChangeText")
+    return {
+      headerTitle: "Movies",
+      headerRight: (
+        <SearchButton  value={searchValue} onChangeText={onChangeText}/>
+      )
+    };
   };
 
   state = {
     movies: [],
     page: 0,
+    searchValue: ""
   };
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     const { favourites } = this.props.screenProps;
 
     if (prevProps.screenProps.favourites !== favourites) {
@@ -41,13 +48,19 @@ export default class MoviesListScreen extends React.Component {
       );
 
       this.setState({
-        movies: updatedMovies,
+        movies: updatedMovies
       });
     }
+
+    if (this.state.searchValue !== prevState.searchValue) {
+      this.props.navigation.setParams({ searchValue: this.state.searchValue });
+    }
   }
+  
 
   componentDidMount() {
-    this.fetchNextMoviesPageAsync();
+    this.props.navigation.setParams({searchValue:this.state.searchValue, onChangeText:this.onChangeSearchText})
+    // this.fetchNextMoviesPageAsync();
   }
 
   Movie = ({ item }) => {
@@ -55,24 +68,24 @@ export default class MoviesListScreen extends React.Component {
   };
 
   goToMoviesDetail = imdbID => {
-    console.log(imdbID)
-    this.props.navigation.push('MovieDetails', {
+    console.log(imdbID);
+    this.props.navigation.push("MovieDetails", {
       movie: this.state.movies.find(movie => movie.imdbID == imdbID)
-    })
-  }
+    });
+  };
 
   fetchNextMoviesPageAsync = async () => {
     const newPage = await fetchMoviesSearchAsync("harry", this.state.page + 1);
     const newPageWithFavourites = newPage.map(movie => ({
       ...movie,
       isInFavourites: this.props.screenProps.favourites.includes(movie.imdbID),
-      onAddToFavourites: this.props.screenProps.onFavouriteAdd,
-      onMoviePress: this.goToMoviesDetail,
+      onFavouriteAdd: this.props.screenProps.onFavouriteAdd,
+      onMoviePress: this.goToMoviesDetail
     }));
 
     this.setState(prevState => ({
       movies: prevState.movies.concat(newPageWithFavourites),
-      page: prevState.page + 1,
+      page: prevState.page + 1
     }));
   };
 
@@ -94,6 +107,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
-  },
+    justifyContent: "center"
+  }
 });

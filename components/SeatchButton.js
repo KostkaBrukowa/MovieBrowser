@@ -4,24 +4,73 @@ import {
   Text,
   View,
   TextInput,
-  TouchableHighlight
+  TouchableOpacity,
+  Animated
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
-export const SearchButton = () => (
-  <View style={{ flexDirection: "row", alignItems: "center" }}>
-    <TextInput style={styles.searchContainer} value={"placeholder"} />
-    <TouchableHighlight onPress={() => console.log("search")}>
-      <Icon name="md-search" size={25} />
-    </TouchableHighlight>
-  </View>
-);
+const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
+
+export class SearchButton extends React.Component {
+  state = {
+    animatedValue: new Animated.Value(0),
+  }
+
+  showTextInput = ()=>{
+    Animated.timing(                  
+      this.state.animatedValue,             
+      {
+        toValue: 1,                   
+        duration: 500,
+      }
+    ).start(); 
+  }
+
+  hideTextInput = ()=>{
+    Animated.timing(                  
+      this.state.animatedValue,             
+      {
+        toValue: 0,                   
+        duration: 500,
+      }
+    ).start(); 
+  }
+
+  componentDidMount(){
+    // this.showTextInput()
+  }
+
+  toSearchInputWidth = () => {
+    return this.state.animatedValue.interpolate({
+      inputRange:[0,1],
+      outputRange:[100, 220]
+    })
+  }
+
+  render() {
+    return (
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <AnimatedTextInput
+          style={[styles.searchContainer, {width: this.toSearchInputWidth()}]}
+          placeholder="Search"
+          value={this.props.searchValue}
+          onFocus={this.showTextInput}
+          onBlur={this.hideTextInput}
+        />
+        <TouchableOpacity onPress={() => console.log("search")}>
+          <Icon name="md-search" size={25} />
+        </TouchableOpacity>
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   searchContainer: {
-    width: 150,
     borderWidth: 1,
     borderRadius: 15,
-    height: 35
+    height: 35,
+    paddingRight: 20,
+    textAlign:'right'
   }
 });
