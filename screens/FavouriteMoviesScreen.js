@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { MovieListItem } from "./../components/MovieListItem";
+import { Constants } from "expo";
 
 export const FavouritesBarTitle = "Favourites";
 export const FavouritesBarIcon = ({ focused, tintColor }) => {
@@ -44,9 +45,11 @@ export default class FavouriteMoviesScreen extends React.Component {
     // ));
     return (
       <FlatList
-        style={{ flex: 1 }}
+        style={{ flex: 1, marginTop: Constants.statusBarHeight }}
         data={this.state.movies}
-        renderItem={({ item }) => <MovieListItem {...item} isInFavourites={true} />}
+        renderItem={({ item }) => (
+          <MovieListItem {...item} isInFavourites={true} />
+        )}
         keyExtractor={movie => movie.imdbID}
       />
     );
