@@ -7,6 +7,7 @@ Simple app in React Native. Allows user to search for a movies from remote api. 
 What things you need to install the software and how to install them
 
 Android Studio(android emulator) https://developer.android.com/studio/run/emulator
+
 npm or yarn package manager https://yarnpkg.com/lang/en/
 
 ### Installing
@@ -33,9 +34,8 @@ npm run android
 
 App should then run on your emulator.
 
-End with an example of getting some data out of the system or using it for a little demo
 
-#Example run
+## Example run
 
 ![](sample.gif)
 
