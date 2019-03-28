@@ -2,6 +2,12 @@
 
 Simple app in React Native. Allows user to search for a movies from remote api. User can also see more specific details or add a movie to favourites list.
 
+
+## Example run
+
+![](sample.gif)
+
+
 ### Prerequisites
 
 What things you need to install the software and how to install them
@@ -34,10 +40,6 @@ npm run android
 
 App should then run on your emulator.
 
-
-## Example run
-
-![](sample.gif)
 
 ## Built With
 
