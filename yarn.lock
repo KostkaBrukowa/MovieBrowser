@@ -16722,9 +16722,9 @@ symbol-tree@^3.2.4:
   integrity sha1-QwY30ki6d+B4iDlR+5qg7tfGP6I=
 
 systeminformation@^4.23.3:
-  version "4.30.11"
-  resolved "https://registry.npmjs.org/systeminformation/-/systeminformation-4.30.11.tgz"
-  integrity sha1-rQUVAHGQ3+xr7yK8iqHLrXYjgh0=
+  version "4.34.23"
+  resolved "https://registry.yarnpkg.com/systeminformation/-/systeminformation-4.34.23.tgz#54c54ced5adc49c27cda953b73c0819ed56edd45"
+  integrity sha512-33+lQwlLxXoxy0o9WLOgw8OjbXeS3Jv+pSl+nxKc2AOClBI28HsdRPpH0u9Xa9OVjHLT9vonnOMw1ug7YXI0dA==
 
 table@^4.0.1:
   version "4.0.3"
