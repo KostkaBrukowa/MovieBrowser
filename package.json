@@ -69,7 +69,7 @@
     "babel-plugin-transform-react-remove-prop-types": "0.4.21",
     "babel-plugin-transform-xregexp": "1.0.0",
     "body-parser": "1.19.0",
-    "css-loader": "0.28.8",
+    "css-loader": "6.4.0",
     "enzyme": "3.9.0",
     "enzyme-adapter-react-16": "1.15.2",
     "eslint": "7.31.0",
