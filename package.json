@@ -171,7 +171,7 @@
     "@types/react-router-dom": "~5.1.5",
     "@types/underscore": "~1.8.9",
     "anchor-scroll": "2.0.0",
-    "bootstrap": "3.3.7",
+    "bootstrap": "3.4.1",
     "bootswatch": "3.3.7",
     "chance": "1.0.16",
     "classnames": "2.2.5",
