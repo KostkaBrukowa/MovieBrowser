@@ -3586,18 +3586,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@~16.9.11":
-  version "16.9.41"
-  resolved "https://registry.npmjs.org/@types/react/-/react-16.9.41.tgz"
-  integrity sha1-klE37k0v9Aag7PKejpI3OQhEAC4=
-  dependencies:
-    "@types/prop-types" "*"
-    csstype "^2.2.0"
-
-"@types/react@>=16.9.0":
-  version "17.0.29"
-  resolved "https://registry.npmjs.org/@types/react/-/react-17.0.29.tgz#9535f3fc01a4981ce9cadcf0daa2593c0c2f2251"
-  integrity sha1-lTXz/AGkmBzpytzw2qJZPAwvIlE=
+"@types/react@*", "@types/react@>=16.9.0", "@types/react@~17.0.34":
+  version "17.0.34"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.34.tgz#797b66d359b692e3f19991b6b07e4b0c706c0102"
+  integrity sha512-46FEGrMjc2+8XhHXILr+3+/sTe3OfzSPU9YGKILLrUYbQ1CLQC9Daqo1KzENGXAWwrFwiY0l4ZbF20gRvgpWTg==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -6073,11 +6065,6 @@ cssstyle@^2.3.0:
   integrity sha1-/2ZaDdvcMYZLCWR/NBY0Q9kLCFI=
   dependencies:
     cssom "~0.3.6"
-
-csstype@^2.2.0:
-  version "2.6.11"
-  resolved "https://registry.npmjs.org/csstype/-/csstype-2.6.11.tgz"
-  integrity sha1-RS9NAkFJ7PJgqFKwJeNlYqJT/8U=
 
 csstype@^3.0.2:
   version "3.0.8"
